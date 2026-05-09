@@ -7,6 +7,7 @@ from logic.rc5 import RC5
 from ui.base_frame import BaseLabFrame
 
 ERROR_TITLE = "Помилка"
+PASS_REQUIRED = "Введіть пароль"
 
 class Lab3Frame(BaseLabFrame):
     def __init__(self, parent, controller):
@@ -58,7 +59,7 @@ class Lab3Frame(BaseLabFrame):
     def encrypt_text_action(self):
         try:
             password = self.password_entry.get()
-            if not password: return messagebox.showwarning("!", "Введіть пароль")
+            if not password: return messagebox.showwarning("!", PASS_REQUIRED)
 
             data = self.input_text.get("1.0", tk.END).strip().encode('utf-8')
             if not data: return
@@ -92,12 +93,12 @@ class Lab3Frame(BaseLabFrame):
             self.result_area.delete(1.0, tk.END)
             self.result_area.insert(tk.END,
                                     f"RC5 Decryption (CBC)\nТекст: {decrypted.decode('utf-8', errors='replace')}\n\nЧас: {end - start:.6f} сек.")
-        except Exception as e:
+        except Exception:
             messagebox.showerror(ERROR_TITLE, "Невірний Hex-код або пароль")
 
     def encrypt_file_action(self):
         password = self.password_entry.get()
-        if not password: return messagebox.showwarning("!", "Введіть пароль")
+        if not password: return messagebox.showwarning("!", PASS_REQUIRED)
 
         file_path = filedialog.askopenfilename()
         if not file_path: return
@@ -124,7 +125,7 @@ class Lab3Frame(BaseLabFrame):
 
     def decrypt_file_action(self):
         password = self.password_entry.get()
-        if not password: return messagebox.showwarning("!", "Введіть пароль")
+        if not password: return messagebox.showwarning("!", PASS_REQUIRED)
 
         file_path = filedialog.askopenfilename(filetypes=[("RC5 files", "*.rc5")])
         if not file_path: return
@@ -145,7 +146,7 @@ class Lab3Frame(BaseLabFrame):
 
                 self.result_area.delete(1.0, tk.END)
                 self.result_area.insert(tk.END, f"ФАЙЛ РОЗШИФРОВАНО\nЧас: {end - start:.6f} сек.")
-        except Exception as e:
+        except Exception:
             messagebox.showerror(ERROR_TITLE, "Помилка дешифрування!")
 
     def run_self_test(self):
