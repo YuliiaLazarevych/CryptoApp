@@ -6,6 +6,7 @@ import re
 from logic.dsa import DSALogic
 from ui.base_frame import BaseLabFrame
 
+ERROR_TITLE = "Помилка"
 
 class Lab5Frame(BaseLabFrame):
     def __init__(self, parent, controller):
@@ -71,7 +72,7 @@ class Lab5Frame(BaseLabFrame):
             self.public_key = self.dsa_logic.load_public_key("dsa_public.pem")
             messagebox.showinfo("Успіх", "Ключі завантажено!")
         except Exception as e:
-            messagebox.showerror("Помилка", f"Не вдалося знайти файли ключів.")
+            messagebox.showerror(ERROR_TITLE, f"Не вдалося знайти файли ключів.")
 
     def sign_text_action(self):
         if not self.private_key: return messagebox.showwarning("!", "Потрібен приватний ключ!")
@@ -87,7 +88,7 @@ class Lab5Frame(BaseLabFrame):
             self.result_area.insert(tk.END, f"Hex: \n{signature.hex()}\n\n")
             self.result_area.insert(tk.END, f"Час генерації: {end - start:.6f} сек.")
         except Exception as e:
-            messagebox.showerror("Помилка", str(e))
+            messagebox.showerror(ERROR_TITLE, str(e))
 
     def verify_text_action(self):
         if not self.public_key: return messagebox.showwarning("!", "Потрібен відкритий ключ!")
@@ -97,7 +98,7 @@ class Lab5Frame(BaseLabFrame):
 
             hex_match = re.search(r'[0-9a-fA-F]{40,}', full_content)
             if not hex_match:
-                return messagebox.showerror("Помилка", "Підпис у полі результату не знайдено!")
+                return messagebox.showerror(ERROR_TITLE, "Підпис у полі результату не знайдено!")
 
             sig_bytes = bytes.fromhex(hex_match.group(0))
             is_valid = self.dsa_logic.verify_signature(self.public_key, data, sig_bytes)
@@ -110,7 +111,7 @@ class Lab5Frame(BaseLabFrame):
                 messagebox.showerror("Результат перевірки", res_msg)
 
         except Exception as e:
-            messagebox.showerror("Помилка", f"Не вдалося перевірити: {e}")
+            messagebox.showerror(ERROR_TITLE, f"Не вдалося перевірити: {e}")
 
     def sign_file_action(self):
         if not self.private_key: return

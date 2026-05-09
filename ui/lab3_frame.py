@@ -6,6 +6,7 @@ import os
 from logic.rc5 import RC5
 from ui.base_frame import BaseLabFrame
 
+ERROR_TITLE = "Помилка"
 
 class Lab3Frame(BaseLabFrame):
     def __init__(self, parent, controller):
@@ -73,7 +74,7 @@ class Lab3Frame(BaseLabFrame):
             self.result_area.insert(tk.END,
                                     f"RC5 Encryption (CBC)\nHex: {encrypted.hex()}\n\nЧас: {end - start:.6f} сек.")
         except Exception as e:
-            messagebox.showerror("Помилка", str(e))
+            messagebox.showerror(ERROR_TITLE, str(e))
 
     def decrypt_text_action(self):
         try:
@@ -92,7 +93,7 @@ class Lab3Frame(BaseLabFrame):
             self.result_area.insert(tk.END,
                                     f"RC5 Decryption (CBC)\nТекст: {decrypted.decode('utf-8', errors='replace')}\n\nЧас: {end - start:.6f} сек.")
         except Exception as e:
-            messagebox.showerror("Помилка", "Невірний Hex-код або пароль")
+            messagebox.showerror(ERROR_TITLE, "Невірний Hex-код або пароль")
 
     def encrypt_file_action(self):
         password = self.password_entry.get()
@@ -119,7 +120,7 @@ class Lab3Frame(BaseLabFrame):
                 self.result_area.insert(tk.END,
                                         f"ФАЙЛ ЗАШИФРОВАНО\nШлях: {os.path.basename(save_path)}\nЧас: {end - start:.6f} сек.")
         except Exception as e:
-            messagebox.showerror("Помилка", str(e))
+            messagebox.showerror(ERROR_TITLE, str(e))
 
     def decrypt_file_action(self):
         password = self.password_entry.get()
@@ -145,7 +146,7 @@ class Lab3Frame(BaseLabFrame):
                 self.result_area.delete(1.0, tk.END)
                 self.result_area.insert(tk.END, f"ФАЙЛ РОЗШИФРОВАНО\nЧас: {end - start:.6f} сек.")
         except Exception as e:
-            messagebox.showerror("Помилка", "Помилка дешифрування!")
+            messagebox.showerror(ERROR_TITLE, "Помилка дешифрування!")
 
     def run_self_test(self):
         try:

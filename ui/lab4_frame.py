@@ -7,6 +7,7 @@ from logic.rsa import RSA
 from logic.rc5 import RC5
 from ui.base_frame import BaseLabFrame
 
+ERROR_TITLE = "Помилка"
 
 class Lab4Frame(BaseLabFrame):
     def __init__(self, parent, controller):
@@ -71,7 +72,7 @@ class Lab4Frame(BaseLabFrame):
             self.public_key = self.rsa.load_public_key("rsa_public.pem")
             messagebox.showinfo("Успіх", "Ключі завантажено!")
         except Exception as e:
-            messagebox.showerror("Помилка", f"Не вдалося завантажити ключі: {e}")
+            messagebox.showerror(ERROR_TITLE, f"Не вдалося завантажити ключі: {e}")
 
     def rsa_encrypt(self):
         if not self.public_key: return messagebox.showwarning("!", "Завантажте або згенеруйте публічний ключ")
@@ -87,7 +88,7 @@ class Lab4Frame(BaseLabFrame):
             self.result_area.insert(tk.END,
                                     f"RSA Encryption\nHex: {encrypted.hex()}\n\nЧас: {end - start:.6f} сек.")
         except Exception as e:
-            messagebox.showerror("Помилка", str(e))
+            messagebox.showerror(ERROR_TITLE, str(e))
 
     def rsa_decrypt(self):
         if not self.private_key: return messagebox.showwarning("!", "Завантажте приватний ключ")
@@ -99,7 +100,7 @@ class Lab4Frame(BaseLabFrame):
             self.result_area.delete(1.0, tk.END)
             self.result_area.insert(tk.END, f"RSA Decryption\nТекст: {decrypted.decode('utf-8')}")
         except Exception as e:
-            messagebox.showerror("Помилка", f"Дешифрування неможливе: {e}")
+            messagebox.showerror(ERROR_TITLE, f"Дешифрування неможливе: {e}")
 
     def clear_res(self):
         self.input_text.delete("1.0", tk.END)
@@ -142,7 +143,7 @@ class Lab4Frame(BaseLabFrame):
             self.result_area.delete(1.0, tk.END)
             self.result_area.insert(tk.END, report)
         except Exception as e:
-            messagebox.showerror("Помилка", f"Не вдалося порівняти: {e}")
+            messagebox.showerror(ERROR_TITLE, f"Не вдалося порівняти: {e}")
 
     def encrypt_file_action(self):
         if not self.public_key:
@@ -170,7 +171,7 @@ class Lab4Frame(BaseLabFrame):
                                         f"Час роботи: {end - start:.6f} сек.\nРозмір: {len(encrypted_data)} байт")
                 messagebox.showinfo("Успіх", "Файл успішно зашифровано!")
         except Exception as e:
-            messagebox.showerror("Помилка", f"Не вдалося зашифрувати файл: {e}")
+            messagebox.showerror(ERROR_TITLE, f"Не вдалося зашифрувати файл: {e}")
 
     def decrypt_file_action(self):
         if not self.private_key:
@@ -192,4 +193,4 @@ class Lab4Frame(BaseLabFrame):
 
                 messagebox.showinfo("Успіх", "Файл успішно розшифровано!")
         except Exception as e:
-            messagebox.showerror("Помилка", f"Дешифрування файлу неможливе: {e}")
+            messagebox.showerror(ERROR_TITLE, f"Дешифрування файлу неможливе: {e}")

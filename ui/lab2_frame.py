@@ -4,6 +4,7 @@ import tkinter.ttk as ttk
 from logic.md5 import MD5
 from ui.base_frame import BaseLabFrame
 
+ERROR_TITLE = "Помилка"
 
 class Lab2Frame(BaseLabFrame):
     def __init__(self, parent, controller):
@@ -65,7 +66,7 @@ class Lab2Frame(BaseLabFrame):
                     res = self.md5.hash_bytes(f.read())
                 self.display_result(f"File: {path.split('/')[-1]}\nMD5: {res}")
             except Exception as e:
-                messagebox.showerror("Помилка", str(e))
+                messagebox.showerror(ERROR_TITLE, str(e))
 
     def verify_file(self):
         path = filedialog.askopenfilename(title="Виберіть файл для перевірки")
@@ -90,7 +91,7 @@ class Lab2Frame(BaseLabFrame):
 
                 self.display_result(res_text)
             except Exception as e:
-                messagebox.showerror("Помилка", f"Не вдалося прочитати файл: {e}")
+                messagebox.showerror(ERROR_TITLE, f"Не вдалося прочитати файл: {e}")
 
     def run_full_test(self):
         vectors = [
@@ -140,6 +141,6 @@ class Lab2Frame(BaseLabFrame):
                     f.write(content)
                 messagebox.showinfo("Успіх", f"Файл успішно збережено за шляхом:\n{file_path}")
             except Exception as e:
-                messagebox.showerror("Помилка", f"Не вдалося зберегти файл: {e}")
+                messagebox.showerror(ERROR_TITLE, f"Не вдалося зберегти файл: {e}")
 
         self.setup_context_menu(self.n_entry, self.result_area)
