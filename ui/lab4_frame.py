@@ -8,6 +8,7 @@ from logic.rc5 import RC5
 from ui.base_frame import BaseLabFrame
 
 ERROR_TITLE = "Помилка"
+SUCCESS_TITLE = "Успіх!"
 
 class Lab4Frame(BaseLabFrame):
     def __init__(self, parent, controller):
@@ -59,18 +60,18 @@ class Lab4Frame(BaseLabFrame):
 
     def gen_keys(self):
         self.private_key, self.public_key = self.rsa.generate_keys()
-        messagebox.showinfo("Успіх", "Ключі RSA-2048 згенеровано!")
+        messagebox.showinfo(SUCCESS_TITLE, "Ключі RSA-2048 згенеровано!")
 
     def save_keys(self):
         if not self.private_key: return messagebox.showwarning("!", "Спершу згенеруйте ключі")
         self.rsa.save_keys(self.private_key, self.public_key)
-        messagebox.showinfo("Успіх", "Ключі збережено у файли rsa_private.pem та rsa_public.pem")
+        messagebox.showinfo(SUCCESS_TITLE, "Ключі збережено у файли rsa_private.pem та rsa_public.pem")
 
     def load_keys(self):
         try:
             self.private_key = self.rsa.load_private_key("rsa_private.pem")
             self.public_key = self.rsa.load_public_key("rsa_public.pem")
-            messagebox.showinfo("Успіх", "Ключі завантажено!")
+            messagebox.showinfo(SUCCESS_TITLE, "Ключі завантажено!")
         except Exception as e:
             messagebox.showerror(ERROR_TITLE, f"Не вдалося завантажити ключі: {e}")
 
@@ -169,7 +170,7 @@ class Lab4Frame(BaseLabFrame):
                 self.result_area.insert(tk.END, f"ФАЙЛ ЗАШИФРОВАНО\nОригінал: {os.path.basename(file_path)}\n")
                 self.result_area.insert(tk.END,
                                         f"Час роботи: {end - start:.6f} сек.\nРозмір: {len(encrypted_data)} байт")
-                messagebox.showinfo("Успіх", "Файл успішно зашифровано!")
+                messagebox.showinfo(SUCCESS_TITLE, "Файл успішно зашифровано!")
         except Exception as e:
             messagebox.showerror(ERROR_TITLE, f"Не вдалося зашифрувати файл: {e}")
 
@@ -191,6 +192,6 @@ class Lab4Frame(BaseLabFrame):
                 with open(save_path, "wb") as f:
                     f.write(decrypted_data)
 
-                messagebox.showinfo("Успіх", "Файл успішно розшифровано!")
+                messagebox.showinfo(SUCCESS_TITLE, "Файл успішно розшифровано!")
         except Exception as e:
             messagebox.showerror(ERROR_TITLE, f"Дешифрування файлу неможливе: {e}")

@@ -7,6 +7,7 @@ from logic.dsa import DSALogic
 from ui.base_frame import BaseLabFrame
 
 ERROR_TITLE = "Помилка"
+SUCCESS_TITLE = "Успіх!"
 
 class Lab5Frame(BaseLabFrame):
     def __init__(self, parent, controller):
@@ -59,20 +60,20 @@ class Lab5Frame(BaseLabFrame):
 
     def gen_keys(self):
         self.private_key, self.public_key = self.dsa_logic.generate_keys()
-        messagebox.showinfo("Успіх", "Ключі DSA-1024 згенеровано!")
+        messagebox.showinfo(SUCCESS_TITLE, "Ключі DSA-1024 згенеровано!")
 
     def save_keys(self):
         if not self.private_key: return messagebox.showwarning("!", "Спершу згенеруйте ключі")
         self.dsa_logic.save_keys(self.private_key, self.public_key)
-        messagebox.showinfo("Успіх", "Ключі збережено!")
+        messagebox.showinfo(SUCCESS_TITLE, "Ключі збережено!")
 
     def load_keys(self):
         try:
             self.private_key = self.dsa_logic.load_private_key("dsa_private.pem")
             self.public_key = self.dsa_logic.load_public_key("dsa_public.pem")
-            messagebox.showinfo("Успіх", "Ключі завантажено!")
-        except Exception as e:
-            messagebox.showerror(ERROR_TITLE, f"Не вдалося знайти файли ключів.")
+            messagebox.showinfo(SUCCESS_TITLE, "Ключі завантажено!")
+        except Exception:
+            messagebox.showerror(ERROR_TITLE, "Не вдалося знайти файли ключів.")
 
     def sign_text_action(self):
         if not self.private_key: return messagebox.showwarning("!", "Потрібен приватний ключ!")
@@ -122,7 +123,7 @@ class Lab5Frame(BaseLabFrame):
         sp = filedialog.asksaveasfilename(defaultextension=".sig")
         if sp:
             with open(sp, "w") as f: f.write(sig.hex())
-            messagebox.showinfo("Успіх", "Підпис файлу створено!")
+            messagebox.showinfo(SUCCESS_TITLE, "Підпис файлу створено!")
 
     def verify_file_action(self):
         if not self.public_key: return
