@@ -16,3 +16,10 @@ coverage.xml
 *.pem
 
 result_*.txt
+venv/
+.pytest_cache/
+
+dsa_private.pem
+dsa_public.pem
+
+.idea/

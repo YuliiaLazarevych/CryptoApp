@@ -32,7 +32,6 @@ class Lab2Frame(BaseLabFrame):
             ("Зберегти у файл", self.save_to_file)
         ]
 
-        # поле для очікуваного хешу
         expect_frame = tk.LabelFrame(self, text=" Перевірка цілісності ", fg="#3a7ebf", bg="#2b2b2b", padx=10, pady=5)
         expect_frame.pack(fill="x", padx=20, pady=5)
 
@@ -46,7 +45,6 @@ class Lab2Frame(BaseLabFrame):
             btn = ttk.Button(btn_row, text=text, command=cmd)
             btn.pack(side="left", padx=2, fill="x", expand=True)
 
-        # поле результатів
         self.result_area = tk.Text(self, height=14, font=("Consolas", 10),
                                    bg="#1e1e1e", fg="#4EC9B0", padx=10, pady=10)
         self.result_area.pack(pady=5, padx=20, fill="both", expand=True)
@@ -81,7 +79,6 @@ class Lab2Frame(BaseLabFrame):
         if path:
             try:
                 with open(path, "rb") as f:
-                    # обчислюємо реальний хеш файлу
                     actual = self.md5.hash_bytes(f.read())
 
                 if actual.upper() == expected.upper():
@@ -124,14 +121,12 @@ class Lab2Frame(BaseLabFrame):
         self.result_area.insert(tk.END, text)
 
     def save_to_file(self):
-        # беремо контент із текстового поля
         content = self.result_area.get(1.0, tk.END).strip()
 
         if not content:
             messagebox.showwarning("Попередження", "Поле результатів порожнє. Немає чого зберігати!")
             return
 
-        # діалог "Зберегти як..."
         file_path = filedialog.asksaveasfilename(
             defaultextension=".txt",
             filetypes=[("Text files", "*.txt"), ("All files", "*.*")],
@@ -139,7 +134,6 @@ class Lab2Frame(BaseLabFrame):
             title="Зберегти результат хешування"
         )
 
-        # якщо юзер не натиснув "Скасувати" (тобто file_path не порожній)
         if file_path:
             try:
                 with open(file_path, "w", encoding="utf-8") as f:

@@ -112,12 +112,10 @@ class Lab4Frame(BaseLabFrame):
             if not self.public_key:
                 self.private_key, self.public_key = self.rsa.generate_keys()
 
-            # тест RSA
             t1 = time.perf_counter()
             self.rsa.encrypt_data(self.public_key, test_data)
             rsa_time = time.perf_counter() - t1
 
-            # тест RC5
             key_rc5 = "my_secret_key_16"
             iv_rc5 = b"INIT"
             cipher_rc5 = RC5(key_rc5)

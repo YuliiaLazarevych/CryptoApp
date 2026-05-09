@@ -4,13 +4,10 @@ import struct
 
 class MD5:
     def __init__(self):
-        # ініціалізую A, B, C, D
         self.init_values = [0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476]
 
-        # таблиця T на основі синуса
         self.T = [int(4294967296 * abs(math.sin(i + 1))) & 0xFFFFFFFF for i in range(64)]
 
-        # значення зсувів S
         self.S = [
             7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
             5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20,
@@ -26,20 +23,17 @@ class MD5:
         return self.hash_bytes(message.encode('utf-8'))
 
     def hash_bytes(self, data: bytes) -> str:
-        # доповнюю та додаю довжину
         orig_len_bits = (len(data) * 8) & 0xFFFFFFFFFFFFFFFF
         data += b'\x80'
         while (len(data) * 8) % 512 != 448:
             data += b'\x00'
-        data += struct.pack('<Q', orig_len_bits)  # дописую в самий кінець довжину мого файлу
+        data += struct.pack('<Q', orig_len_bits)
 
-        # початкові значення
         a, b, c, d = self.init_values
 
-        # обробка блоками по 512 біт
         for i in range(0, len(data), 64):
             block = data[i:i + 64]
-            X = list(struct.unpack('<16I', block)) # розбиваю цей шматок на 16 чисел
+            X = list(struct.unpack('<16I', block))
             aa, bb, cc, dd = a, b, c, d
 
             for j in range(64):
@@ -67,11 +61,9 @@ class MD5:
             c = (c + cc) & 0xFFFFFFFF
             d = (d + dd) & 0xFFFFFFFF
 
-        # вихід у шістнадцятковому форматі
         return ''.join(f'{x:02x}' for x in struct.pack('<4I', a, b, c, d)).upper()
 
     def check_file_integrity(self, filepath: str, expected_hash: str) -> bool:
-        # обробка великих файлів частинами
         with open(filepath, 'rb') as f:
             file_data = f.read()
         actual_hash = self.hash_bytes(file_data)

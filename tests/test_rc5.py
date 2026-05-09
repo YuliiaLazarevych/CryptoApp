@@ -11,7 +11,7 @@ class TestRC5(unittest.TestCase):
         self.cipher = RC5(self.password)
 
     def test_block_roundtrip(self):
-        original = b"test"  # Рівно 4 байти
+        original = b"test"
         encrypted = self.cipher.encrypt_block(original)
         decrypted = self.cipher.decrypt_block(encrypted)
         self.assertEqual(original, decrypted)
@@ -19,7 +19,6 @@ class TestRC5(unittest.TestCase):
     def test_file_encryption_roundtrip(self):
         original_data = b"This is some secret data that needs encryption!"
 
-        # Використовуємо методи encrypt_file / decrypt_file
         encrypted = self.cipher.encrypt_file(original_data)
         decrypted = self.cipher.decrypt_file(encrypted)
 
