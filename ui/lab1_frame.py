@@ -53,7 +53,7 @@ class Lab1Frame(BaseLabFrame):
 
             res_text = f" РЕЗУЛЬТАТ ГЕНЕРАЦІЇ (N={n}) \n"
             res_text += f"Період: {p}\n"
-            res_text += f"\nПерші 50 чисел:\n"
+            res_text += "\nПерші 50 чисел:\n"
             res_text += ", ".join(map(str, sequence[:50]))
             if n > 50: res_text += "..."
 
@@ -84,7 +84,6 @@ class Lab1Frame(BaseLabFrame):
                 err_l = abs(pi_l - target_pi)
                 err_s = abs(pi_s - target_pi)
 
-                # Формуємо блок тексту точно як у подруги
                 block = (
                     f"Оцінка π (LCG, n={n}):          {pi_l:.15f}\n"
                     f"Оцінка π (System random):      {pi_s:.15f}\n"
@@ -104,7 +103,7 @@ class Lab1Frame(BaseLabFrame):
                 f.write("==============================\n")
                 f.write(file_details)
 
-            messagebox.showinfo("Готово", f"Порівняльний тест завершено!\nРезультати збережено у файл: result_comparison.txt")
+            messagebox.showinfo("Готово", "Порівняльний тест завершено!\nРезультати збережено у файл: result_comparison.txt")
         except Exception as e:
             messagebox.showerror("Помилка", str(e))
 
